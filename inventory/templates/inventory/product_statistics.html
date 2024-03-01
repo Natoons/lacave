@@ -1,0 +1,30 @@
+{% extends 'inventory/base.html' %}
+{% block title %}Product Statistics{% endblock %}
+{% block content %}
+{% load custom_filters %}
+<div class="container">
+    <h1>Product Statistics</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Alcools</th>
+                <th scope="col">Total Quantity Today</th>
+                <th scope="col">Total Quantity Week</th>
+                <th scope="col">Total Quantity Month</th>
+                <th scope="col">Total Quantity This Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category, total_last_week in category_totals_last_week.items %}
+            <tr>
+                <td>{{ category }}</td>
+                <td>{{ category_totals_today|get_value_from_dict:category }}</td>
+                <td>{{ total_last_week }}</td>
+                <td>{{ category_totals_last_month|get_value_from_dict:category }}</td>
+                <td>{{ category_totals_this_year|get_value_from_dict:category }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

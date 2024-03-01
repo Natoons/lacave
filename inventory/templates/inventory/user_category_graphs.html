@@ -1,0 +1,36 @@
+{% extends 'inventory/base.html' %}
+{% block title %}User Category Graphs{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>User Category Graphs</h1>
+    {% for user_data in user_category_graphs_data %}
+    <h2>{{ user_data.user.username }}</h2>
+    {% for category, category_data in user_data.category_data.items %}
+    <h3>{{ category }}</h3>
+    <canvas id="chart-{{ user_data.user.id }}-{{ category }}"></canvas>
+    <script>
+    var ctx = document.getElementById('chart-{{ user_data.user.id }}-{{ category }}').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{% for date in dates_list %}'{{ date }}',{% endfor %}],
+            datasets: [{
+                label: 'Daily Product Quantities',
+                backgroundColor: 'rgba(192,75,98,0.2)',
+                borderColor: 'rgb(252,19,39)',
+                data: {{ category_data }}
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+    {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}

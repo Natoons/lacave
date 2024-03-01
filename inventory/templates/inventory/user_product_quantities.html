@@ -1,0 +1,29 @@
+{% extends 'inventory/base.html' %}
+{% block title %}User Product Quantities{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>User Product Quantities</h1>
+    {% for user_data in user_product_quantities %}
+    <h2>{{ user_data.user.username }}</h2>
+    {% for time_range, category_totals in user_data.category_totals.items %}
+    <h3>{{ time_range }}</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Total Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category, total_quantity in category_totals.items %}
+            <tr>
+                <td>{{ category }}</td>
+                <td>{{ total_quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+    {% endfor %}
+</div>
+{% endblock %}

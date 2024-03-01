@@ -1,0 +1,48 @@
+{% extends 'inventory/base.html' %}
+{% block title %}{{ header }} {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nom du frabricant</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Nom Alcool</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.username }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.datetime }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            {% load custom_filters %}
+            </table>
+        </div>
+        {% if user.is_staff and user.is_superuser %}
+        <div class="col-md-4">
+            <form method="POST">
+                <h4>Ajouter mes creations</h4>
+                <hr>
+                {% csrf_token %}
+                {{ form|crispy}}
+                <br>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="col-md-4">
+
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
